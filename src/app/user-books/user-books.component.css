@@ -1,0 +1,57 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+    text-decoration: none;
+}  
+
+body {
+    background-color: #424242;
+}
+
+.book-items {
+    display: flex;
+    flex-wrap: wrap; /* umožní zalamování */
+    margin-left: 500px;
+    margin-top: 80px;
+    min-width: 800px; /* počáteční minimální šířka */
+    min-height: 500px; /* počáteční minimální výška */
+    border: 1px solid #fafafa;
+    box-shadow: 0 0 10px #fafafa;
+    padding: 20px;
+    gap: 20px;
+    background-color: #424242; /* stejné jako pozadí, aby to ladilo */
+}
+
+.obsah {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;          /* Mezera mezi nadpisem a knihami */
+}
+
+
+.obsah h1 {
+    color: #fafafa;
+    font-size: 40px;
+    margin-left: 500px; /* Přidat stejný margin jako book-items */
+    margin-top: 100px;   /* Stejný margin jako book-items */
+}
+
+.book-item {
+    width: 200px;
+    height: 200px;
+    border: 1px solid #fafafa;
+    box-shadow: 0 0 10px #fafafa;
+    position: relative;
+    color: #fafafa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.book-text {
+    display: flex;
+    margin-left: 50px;
+}  
