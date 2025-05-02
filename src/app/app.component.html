@@ -1,13 +1,11 @@
-<body>
-    <div class="page">
-        <div class="navbar">
-            <i><div class="logo">DomčaBooks</div></i>
-            <div class="navbar-items">
-                <div class="navbar-item">Home</div>
-                <div class="navbar-item">Your List</div>
-                <div class="navbar-item">Account</div>
-            </div>
+<div class="page">
+    <div class="navbar">
+        <i><div class="logo">DomčaBooks</div></i>
+        <div class="navbar-items">
+            <li class="navbar-item"><a routerLink=>Home</a></li>
+            <li class="navbar-item"><a routerLink="/userBooks">Your List</a></li>
+            <li class="navbar-item"><a routerLink="/login">Account</a></li>
         </div>
-        <router-outlet></router-outlet>
     </div>
-</body>
+    <router-outlet></router-outlet>
+</div>

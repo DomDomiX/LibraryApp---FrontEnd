@@ -1,1 +1,50 @@
-<p>login works!</p>
+
+    <div class="container">
+        <div class="form-box">
+          <h2>{{ isRegistering ? 'Registrace' : 'Přihlášení' }}</h2>
+          @if (isRegistering == false) {
+          <div class="nevim">
+            <mat-form-field appearance="outline" class="input">
+              <mat-label>E-mail</mat-label>
+              <input matInput placeholder="Zadejte e-mail" [formControl]="mailLogin">
+            </mat-form-field>
+    
+            <mat-form-field appearance="outline" class="input">
+              <mat-label>Zadejte heslo</mat-label>
+              <input matInput [type]="hide() ? 'password' : 'text'" [formControl]="passwordLogin" />
+            </mat-form-field>
+    
+            <button mat-flat-button (click)="login()">Přihlásit</button>
+          </div>
+          <p>Nemáte účet? <a (click)="zmenitForm()">Registrovat</a></p>
+          } @else {
+          <div>
+            <div class="register-input">
+              <mat-form-field appearance="outline" class="input">
+                <mat-label>Jméno</mat-label>
+                <input matInput placeholder="Zadejte jméno" [formControl]="firstNameRegister">
+              </mat-form-field>
+    
+              <mat-form-field appearance="outline" class="input">
+                <mat-label>Přijmení</mat-label>
+                <input matInput placeholder="Zadejte přijmení" [formControl]="lastNameRegister">
+              </mat-form-field>
+            </div>
+              
+    
+            <mat-form-field appearance="outline" class="input">
+              <mat-label>E-mail</mat-label>
+              <input matInput placeholder="Zadejte e-mail" [formControl]="mailRegister">
+            </mat-form-field>
+    
+            <mat-form-field appearance="outline" class="input">
+              <mat-label>Zadejte heslo</mat-label>
+              <input matInput [type]="hide() ? 'password' : 'text'" [formControl]="passwordRegister"/>
+            </mat-form-field>
+    
+            <button mat-flat-button (click)="register()">Registrovat</button>
+          </div>
+          <p id="toggleText">Už máte účet? <a (click)="zmenitForm()">Přihlásit</a></p>
+          }
+        </div>
+      </div>

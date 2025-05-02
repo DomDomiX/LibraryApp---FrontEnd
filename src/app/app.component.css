@@ -34,7 +34,6 @@ body {
 
 .navbar-item {
     color: #fafafa;
-    
     text-align: center;
     padding: 25px;
     font-size: 30px;
@@ -42,6 +41,10 @@ body {
     width: 100%;
     transition: 0.5s;
 }
+
+.navbar-item a {
+    color: #fafafa;
+} 
 
 .navbar-item:hover {
     background-color: white;
