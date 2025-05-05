@@ -6,10 +6,12 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthService {
+  // Addresa Backendu
   private baseUrl = 'http://localhost:3000/api/auth';
 
   constructor(private http: HttpClient) {}
 
+  // Metody odkazující na metody na backendu
   register(data: { firstName: string; lastName: string; email: string; password: string }): Observable<any> {
     return this.http.post(`${this.baseUrl}/register`, data);
   }
