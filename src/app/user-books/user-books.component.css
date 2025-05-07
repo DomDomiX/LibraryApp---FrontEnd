@@ -13,15 +13,12 @@ body {
 .book-items {
     display: flex;
     flex-wrap: wrap; /* umožní zalamování */
-    margin-left: 500px;
+    margin-left: 370px;
     margin-top: 80px;
     min-width: 800px; /* počáteční minimální šířka */
     min-height: 500px; /* počáteční minimální výška */
-    border: 1px solid #fafafa;
-    box-shadow: 0 0 10px #fafafa;
     padding: 20px;
-    gap: 20px;
-    background-color: #424242; /* stejné jako pozadí, aby to ladilo */
+    gap: 40px;
 }
 
 .obsah {
@@ -34,20 +31,29 @@ body {
 .obsah h1 {
     color: #fafafa;
     font-size: 40px;
-    margin-left: 500px; /* Přidat stejný margin jako book-items */
+    margin-left: 400px; /* Přidat stejný margin jako book-items */
     margin-top: 100px;   /* Stejný margin jako book-items */
 }
 
 .book-item {
-    width: 200px;
-    height: 200px;
-    border: 1px solid #fafafa;
-    box-shadow: 0 0 10px #fafafa;
+    width: 250px;
+    height: 400px;
+    box-shadow: 0 0 5px #000000;
     position: relative;
     color: #fafafa;
     display: flex;
     align-items: center;
     justify-content: center;
+    border-radius: 10%;
+    background-color: rgb(53, 53, 53);
+    transition: 0.3s; 
+}
+
+.book-item:hover {
+    border: 1px solid #fafafa;
+    box-shadow: 0 0 5px #fafafa;
+    width: 260px;
+    height: 410px;
 }
 
 

@@ -1,6 +1,13 @@
 <div class="page">
     <div class="navbar">
         <i><div class="logo">DomčaBooks</div></i>
+
+        @if (loggedIn) {
+            <p>Vítej, {{ userName }}!</p>
+        } @else {
+            <p>Nejste přihlášen.</p>
+        }
+
         <div class="navbar-items">
             <li class="navbar-item"><a routerLink=>Home</a></li>
             <li class="navbar-item"><a routerLink="/userBooks">Your List</a></li>

@@ -49,7 +49,13 @@ export class LoginComponent {
     }).subscribe({
       next: (res) => {
         console.log("Přihlášení úspěšné:", res);
+        const user = {
+          name: `${res.firstName} ${res.lastName}`
+        };
+        localStorage.setItem("user", JSON.stringify(user));
         localStorage.setItem("token", res.token);  // Uložíme JWT token
+
+         // Přejdeme na stránku uživatelské knihovny
         this.router.navigate(['/userBooks']);
       },
       error: (err) => {
