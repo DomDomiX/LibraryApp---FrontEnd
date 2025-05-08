@@ -2,11 +2,13 @@
     <div class="obsah">
         <h1>Your Books</h1>
         <div class="book-items">
-            <div class="book-item"><div class="book-text">Harry Potter</div></div>
-            <div class="book-item"><div class="book-text">Harry Potter</div></div>
-            <div class="book-item"><div class="book-text">Harry Potter</div></div>
-            <div class="book-item"><div class="book-text">Harry Potter</div></div>
-            <div class="book-item"><div class="book-text">Harry Potter</div></div>
+            @if (books.length === 0) {
+                <p>Žádné knihy nenalezeny.</p>
+              }
+              
+            @for (book of books; track book.id) {
+                <div class="book-item"><div class="book-text">{{ book.name }}</div></div>
+            }
         </div>
     </div>
 

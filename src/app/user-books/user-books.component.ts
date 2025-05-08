@@ -1,11 +1,47 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, PLATFORM_ID, Inject } from '@angular/core';
+import { AuthService } from '../shared/auth.service';
+import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-user-books',
-  imports: [],
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './user-books.component.html',
   styleUrl: './user-books.component.css'
 })
-export class UserBooksComponent {
+export class UserBooksComponent implements OnInit {
+  books: any[] = [];
 
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {}
+
+  ngOnInit() {
+    if (isPlatformBrowser(this.platformId)) {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        this.router.navigate(['/login']);
+        return;
+      }
+      this.getBooks();
+    } else {
+      console.log('Na serveru (SSR) přeskakuji načítání knih.');
+    }
+  }
+
+  getBooks() {
+    this.authService.getBooks().subscribe({
+      next: (res) => {
+        this.books = res;
+        console.log('Načtené knihy:', this.books);
+      },
+      error: (err) => {
+        console.error('Chyba při načítání knih:', err);
+      }
+    });
+  }
 }

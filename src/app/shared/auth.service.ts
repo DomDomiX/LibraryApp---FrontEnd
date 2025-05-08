@@ -1,6 +1,7 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Injectable, PLATFORM_ID, Inject } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { Observable, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,10 @@ export class AuthService {
   // Addresa Backendu
   private baseUrl = 'http://localhost:3000/api/auth';
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {}
 
   // Metody odkazující na metody na backendu
   register(data: { firstName: string; lastName: string; email: string; password: string }): Observable<any> {
@@ -17,6 +21,37 @@ export class AuthService {
   }
 
   login(data: { email: string; password: string }): Observable<any> {
-    return this.http.post(`${this.baseUrl}/login`, data);
+    return this.http.post(`${this.baseUrl}/login`, data).pipe(
+      tap((response: any) => {
+        console.log('Celá odpověď z loginu:', response);
+        if (response && response.accessToken && isPlatformBrowser(this.platformId)) {
+          localStorage.setItem('token', response.accessToken);
+          console.log('Token uložen do localStorage:', response.accessToken);
+          console.log('Načtený token hned po uložení:', localStorage.getItem('token'));
+        } else if (!isPlatformBrowser(this.platformId)) {
+          console.log('localStorage není dostupný na serveru, token se neuloží.');
+        } else {
+          console.error('accessToken chybí v odpovědi:', response);
+        }
+      })
+    );
+  }
+
+  getBooks(): Observable<any> {
+    if (!isPlatformBrowser(this.platformId)) {
+      console.log('localStorage není dostupný na serveru, přeskakuji volání getBooks.');
+      throw new Error('Cannot access localStorage on server');
+    }
+
+    const token = localStorage.getItem('token');
+    console.log('Načtený token:', token);
+    if (!token) {
+      throw new Error('No token found');
+    }
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
+    console.log('Posílaná hlavička:', headers.get('Authorization'));
+    return this.http.get(`${this.baseUrl}/userBooks`, { headers });
   }
 }

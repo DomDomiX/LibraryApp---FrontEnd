@@ -64,3 +64,13 @@ body {
     color: #fafafa;
     font-size: 35px;
 }
+
+.user {
+    margin-left: 50px;
+    margin-top: 70px;
+    width: 100%;
+}
+
+.user p {
+    font-size: 25px;
+}

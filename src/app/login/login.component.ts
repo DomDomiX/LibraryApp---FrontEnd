@@ -53,9 +53,7 @@ export class LoginComponent {
           name: `${res.firstName} ${res.lastName}`
         };
         localStorage.setItem("user", JSON.stringify(user));
-        localStorage.setItem("token", res.token);  // Uložíme JWT token
-
-         // Přejdeme na stránku uživatelské knihovny
+        localStorage.setItem("token", res.accessToken);
         this.router.navigate(['/userBooks']);
       },
       error: (err) => {

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { RouterLink } from '@angular/router';
 import { Router, NavigationEnd } from '@angular/router';
@@ -13,14 +13,19 @@ import { Inject, PLATFORM_ID } from '@angular/core';
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'LibraryApp';
   userName = '';
   loggedIn = false;
+  books: any[] = [];
 
   constructor(public router: Router, @Inject(PLATFORM_ID) private platformId: Object) {}
 
   ngOnInit() {
+    this.whoAmI();
+  }
+
+  whoAmI() {
     if (isPlatformBrowser(this.platformId)) {
       const user = localStorage.getItem("user");
       console.log("Načtený user:", user);  // Logujme obsah načtený z localStorage
@@ -32,4 +37,6 @@ export class AppComponent {
       }
     }
   }
+
+  // <-- TODO: Udelat odhlaseni --> 
 }

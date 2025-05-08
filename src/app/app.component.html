@@ -2,16 +2,25 @@
     <div class="navbar">
         <i><div class="logo">DomčaBooks</div></i>
 
-        @if (loggedIn) {
-            <p>Vítej, {{ userName }}!</p>
-        } @else {
-            <p>Nejste přihlášen.</p>
-        }
+        <div class="user">
+            @if (loggedIn) {
+            <p>{{ userName }}</p>
+            } @else {
+                <p></p>
+            }
+        </div>
+        
 
         <div class="navbar-items">
-            <li class="navbar-item"><a routerLink=>Home</a></li>
-            <li class="navbar-item"><a routerLink="/userBooks">Your List</a></li>
-            <li class="navbar-item"><a routerLink="/login">Account</a></li>
+            @if (loggedIn) {
+                <li class="navbar-item"><a routerLink=>Home</a></li>
+                <li class="navbar-item"><a routerLink="/userBooks">Your List</a></li>
+                <li class="navbar-item"><a routerLink="">Account</a></li>
+                <li class="navbar-item"><a routerLink="">Log out</a></li> 
+            } @else {
+                <li class="navbar-item"><a routerLink=>Home</a></li>
+                <li class="navbar-item"><a routerLink="/login">Log in</a></li>
+            } 
         </div>
     </div>
     <router-outlet></router-outlet>
