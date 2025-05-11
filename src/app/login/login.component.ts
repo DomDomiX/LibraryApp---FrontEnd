@@ -8,6 +8,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { AuthService } from '../shared/auth.service'; 
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-login',
@@ -36,7 +37,7 @@ export class LoginComponent {
     event.stopPropagation();
   }
 
-  constructor(public router: Router, private route: ActivatedRoute, public authService: AuthService) { }
+  constructor(public router: Router, private route: ActivatedRoute, public authService: AuthService, private cdr: ChangeDetectorRef) { }
 
   zmenitForm() {
     this.isRegistering = !this.isRegistering;
@@ -54,7 +55,9 @@ export class LoginComponent {
         };
         localStorage.setItem("user", JSON.stringify(user));
         localStorage.setItem("token", res.accessToken);
-        this.router.navigate(['/userBooks']);
+        this.router.navigate(['/userBooks']).then(() => {
+          window.location.reload(); // Znovu načte stránku po přesměrování
+        });
       },
       error: (err) => {
         console.error("Chyba při přihlášení:", err);
