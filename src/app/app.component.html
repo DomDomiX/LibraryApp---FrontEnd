@@ -16,7 +16,9 @@
                 <li class="navbar-item"><a routerLink=""><i class="bi bi-house"></i> Home</a></li>
                 <li class="navbar-item"><a routerLink="/userBooks"><i class="bi bi-book"></i> Your List</a></li>
                 <li class="navbar-item"><a routerLink="/account"><i class="bi bi-person"></i> Account</a></li>
-                <li class="navbar-item logout-item"><a routerLink="/logout"><i class="bi bi-box-arrow-right"></i> Log out</a></li>
+                <li class="navbar-item logout-item">
+                    <a (click)="logout()"><i class="bi bi-box-arrow-right"></i> Log out</a>
+                </li>
             } @else {
                 <li class="navbar-item"><a routerLink=""><i class="bi bi-house"></i> Home</a></li>
                 <li class="navbar-item"><a routerLink="/login"><i class="bi bi-box-arrow-in-right"></i> Log in</a></li>

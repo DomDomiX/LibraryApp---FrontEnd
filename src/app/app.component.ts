@@ -39,4 +39,13 @@ export class AppComponent implements OnInit {
   }
 
   // <-- TODO: Udelat odhlaseni --> 
+  logout() {
+    // Odstraní uživatelská data z localStorage
+    localStorage.removeItem('user');
+    localStorage.removeItem('token');
+    this.loggedIn = false;
+    this.userName = '';
+    // Přesměruje na přihlašovací stránku
+    this.router.navigate(['/login']);
+  }
 }
