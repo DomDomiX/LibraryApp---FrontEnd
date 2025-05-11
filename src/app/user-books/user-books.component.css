@@ -12,11 +12,11 @@ body {
 
 .book-items {
     display: flex;
-    flex-wrap: wrap; /* umožní zalamování */
+    flex-wrap: wrap; 
     margin-left: 370px;
     margin-top: 80px;
-    min-width: 800px; /* počáteční minimální šířka */
-    min-height: 500px; /* počáteční minimální výška */
+    min-width: 800px;
+    min-height: 500px; 
     padding: 20px;
     gap: 40px;
 }
@@ -24,15 +24,15 @@ body {
 .obsah {
     display: flex;
     flex-direction: column;
-    gap: 30px;          /* Mezera mezi nadpisem a knihami */
+    gap: 30px;         
 }
 
 
 .obsah h1 {
     color: #fafafa;
     font-size: 40px;
-    margin-left: 400px; /* Přidat stejný margin jako book-items */
-    margin-top: 100px;   /* Stejný margin jako book-items */
+    margin-left: 400px; 
+    margin-top: 100px;   
 }
 
 .book-item {
@@ -52,12 +52,59 @@ body {
 .book-item:hover {
     border: 1px solid #fafafa;
     box-shadow: 0 0 5px #fafafa;
-    width: 260px;
-    height: 410px;
 }
 
 
 .book-text {
     display: flex;
-    margin-left: 50px;
-}  
+    position: absolute;
+    bottom: 15%; 
+    left: 50%;
+    width: 100%;
+    transform: translateX(-50%);
+    text-align: center;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.book-text::before {
+    content: "";
+    position: absolute;
+    top: -20px; 
+    left: 0;
+    width: 100%; 
+    height: 2px; 
+    background-color: #fafafa; 
+    transition: 0.5s;
+}
+
+.book-item:hover .book-text::before {
+    box-shadow: 0px 15px 30px rgba(255, 255, 255, 0.8), 
+                0px 0px 20px rgba(255, 255, 255, 1); 
+}
+
+.book-buttons {
+    display: flex;
+    justify-content: center; 
+    gap: 10px; 
+    position: absolute;
+    bottom: 5%;
+    width: 100%;
+}
+
+.book-buttons button {
+    background-color: #424242;
+    color: #fafafa;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 12px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.book-buttons button:hover {
+    background-color: #fafafa;
+    color: #424242;
+    box-shadow: 0px 4px 10px rgba(255, 255, 255, 0.5);
+}
