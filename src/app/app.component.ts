@@ -5,6 +5,7 @@ import { Router, NavigationEnd } from '@angular/router';
 import { RouterLinkActive } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common'; 
 import { Inject, PLATFORM_ID } from '@angular/core';
+import { AuthService } from './shared/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -19,7 +20,7 @@ export class AppComponent implements OnInit {
   loggedIn = false;
   books: any[] = [];
 
-  constructor(public router: Router, @Inject(PLATFORM_ID) private platformId: Object) {}
+  constructor(public router: Router, @Inject(PLATFORM_ID) private platformId: Object, public authService: AuthService) {}
 
   ngOnInit() {
     this.whoAmI();
@@ -27,18 +28,31 @@ export class AppComponent implements OnInit {
 
   whoAmI() {
     if (isPlatformBrowser(this.platformId)) {
-      const user = localStorage.getItem("user");
-      console.log("Načtený user:", user);  // Logujme obsah načtený z localStorage
-      if (user) {
-        const userObj = JSON.parse(user);
-        this.userName = userObj.name;
-        console.log("Načtené jméno:", this.userName);  // Logujme jméno
-        this.loggedIn = true;
+      const token = localStorage.getItem('token');
+      if (token) {
+        this.authService.verifyToken(token).subscribe({
+          next: (res) => {
+            if (res.valid) {
+              const user = localStorage.getItem('user');
+              if (user) {
+                const userObj = JSON.parse(user);
+                this.userName = userObj.name;
+                this.loggedIn = true;
+              }
+            } else {
+              this.clearSession(); // Token není platný
+            }
+          },
+          error: () => {
+            this.clearSession(); // Chyba při ověření tokenu
+          }
+        });
+      } else {
+        this.clearSession(); // Token neexistuje
       }
     }
   }
 
-  // <-- TODO: Udelat odhlaseni --> 
   logout() {
     // Odstraní uživatelská data z localStorage
     localStorage.removeItem('user');
@@ -47,5 +61,13 @@ export class AppComponent implements OnInit {
     this.userName = '';
     // Přesměruje na přihlašovací stránku
     this.router.navigate(['/login']);
+  }
+
+  // Vymaže session
+  private clearSession() { 
+    localStorage.removeItem('user');
+    localStorage.removeItem('token');
+    this.loggedIn = false;
+    this.userName = '';
   }
 }

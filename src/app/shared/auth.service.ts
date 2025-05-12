@@ -54,4 +54,12 @@ export class AuthService {
     console.log('Posílaná hlavička:', headers.get('Authorization'));
     return this.http.get(`${this.baseUrl}/userBooks`, { headers });
   }
+
+  verifyToken(token: string): Observable<{ valid: boolean }> {
+    return this.http.post<{ valid: boolean }>(`${this.baseUrl}/verifyToken`, {}, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      } 
+    });
+  }
 }
