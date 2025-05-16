@@ -1,0 +1,19 @@
+<div class="obsah">
+  <h1>Book list</h1>
+  <div class="book-items">
+    @if (books.length === 0) {
+      <p>Žádné knihy nenalezeny.</p>
+    }
+
+    @for (book of books; track book.id) {
+      <div class="book-item">
+        <div class="book-text">{{ book.name }}</div>
+        <div class="book-buttons">
+          <button class="favorite-btn">⭐</button>
+          <button class="read-btn">📖</button>
+          <button class="detail-btn">🔍</button>
+        </div>
+      </div>
+    }
+  </div>
+</div>

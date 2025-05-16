@@ -34,7 +34,7 @@ export class UserBooksComponent implements OnInit {
   }
 
   getBooks() {
-    this.authService.getBooks().subscribe({
+    this.authService.getUserBooks().subscribe({
       next: (res) => {
         this.books = res;
         console.log('Načtené knihy:', this.books);

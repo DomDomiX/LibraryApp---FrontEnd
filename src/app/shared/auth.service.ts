@@ -37,7 +37,7 @@ export class AuthService {
     );
   }
 
-  getBooks(): Observable<any> {
+  getUserBooks(): Observable<any> {
     if (!isPlatformBrowser(this.platformId)) {
       console.log('localStorage není dostupný na serveru, přeskakuji volání getBooks.');
       throw new Error('Cannot access localStorage on server');
