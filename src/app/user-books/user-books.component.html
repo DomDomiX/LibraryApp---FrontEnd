@@ -10,9 +10,18 @@
                 <div class="book-item">
                     <div class="book-text">{{ book.name }}</div>
                     <div class="book-buttons">
-                        <button class="favorite-btn">⭐</button>
-                        <button class="read-btn">📖</button>
-                        <button class="delete-btn">🗑️</button>
+                        <!-- Oblíbená kniha -->
+                        <button class="favorite-btn" title="Přidat do oblíbených">
+                            <i class="bi bi-star"></i>
+                        </button>
+                        <!-- Označit jako přečtenou -->
+                        <button class="read-btn" title="Označit jako přečtenou">
+                            <i class="bi bi-book"></i>
+                        </button>
+                        <!-- Smazat knihu -->
+                        <button class="delete-btn" title="Smazat knihu">
+                            <i class="bi bi-trash"></i>
+                        </button>
                     </div>
                 </div>
             }
