@@ -14,5 +14,4 @@ export class PublicService {
   getAllBooks(): Observable<any> {
     return this.http.get(`${this.baseUrl}/books`);
   }
-
 }
