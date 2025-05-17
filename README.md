@@ -101,6 +101,3 @@ Tento frontend je klientská aplikace pro LibraryApp, která umožňuje uživate
 - Pro testování API doporučujeme Postman nebo Insomnia (pro backend).
 - Pro testování komponent lze použít Angular CLI (`ng test`).
 
----
-
-Pokud budete chtít přidat nové funkce nebo upravit vzhled, doporučujeme prostudovat dokumentaci [Angular](https://angular.io/) a [Angular Material](https://material.angular.io/).
