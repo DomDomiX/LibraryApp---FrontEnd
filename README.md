@@ -104,7 +104,3 @@ Tento frontend je klientská aplikace pro LibraryApp, která umožňuje uživate
 ---
 
 Pokud budete chtít přidat nové funkce nebo upravit vzhled, doporučujeme prostudovat dokumentaci [Angular](https://angular.io/) a [Angular Material](https://material.angular.io/).
-
----
-
-Pokud potřebuješ README v angličtině nebo s konkrétními příklady, dej vědět!
