@@ -10,8 +10,8 @@
         <div class="book-text">{{ book.name }}</div>
         <div class="book-buttons">
           <!-- Oblíbená kniha -->
-          <button class="favorite-btn" title="Přidat do oblíbených">
-            <i class="bi bi-star"></i>
+          <button (click)="saveBook(book)" class="favorite-btn" title="Přidat do oblíbených">
+            <i class="bi bi-plus-circle-fill"></i>
           </button>
           <!-- Označit jako přečtenou -->
           <button class="read-btn" title="Označit jako přečtenou">

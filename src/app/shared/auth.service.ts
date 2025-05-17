@@ -37,6 +37,20 @@ export class AuthService {
     );
   }
 
+  saveBook(data: {bookId: string; name: string; author: string, isbn: string}): Observable<any> {
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+      throw new Error('No token found');
+    }
+
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
+    
+    return this.http.post(`${this.baseUrl}/bookSave`, data, { headers });
+  }
+
   getUserBooks(): Observable<any> {
     if (!isPlatformBrowser(this.platformId)) {
       console.log('localStorage není dostupný na serveru, přeskakuji volání getBooks.');
