@@ -3,11 +3,15 @@ import { AuthService } from '../shared/auth.service';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
+import { ToastModule } from 'primeng/toast';
+import { Button } from 'primeng/button';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-user-books',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ToastModule, Button],
+  providers: [MessageService],
   templateUrl: './user-books.component.html',
   styleUrl: './user-books.component.css'
 })
@@ -17,8 +21,13 @@ export class UserBooksComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private router: Router,
-    @Inject(PLATFORM_ID) private platformId: Object
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private messageService: MessageService
   ) {}
+
+  showSuccess() {
+        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Message Content' });
+    }
 
   ngOnInit() {
     if (isPlatformBrowser(this.platformId)) {
@@ -51,9 +60,11 @@ export class UserBooksComponent implements OnInit {
       next: () => {
         this.books = this.books.filter((book) => book.bookid !== bookid); // Odstranění knihy z lokálního pole
         console.log('Kniha odstraněna:', bookid);
+        this.messageService.add({ severity: 'success', summary: 'Úspěch', detail: 'Kniha byla odstraněna.' });
       },
       error: (err) => {
         console.error('Chyba při odstraňování knihy:', err);
+        this.messageService.add({ severity: 'error', summary: 'Chyba', detail: 'Knihu se nepodařilo odstranit.' });
       }   
     });
   }

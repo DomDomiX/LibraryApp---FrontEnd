@@ -1,3 +1,4 @@
+<p-toast></p-toast>
 <div class="obsah">
   <h1>Book list</h1>
   <div class="book-items">
@@ -10,9 +11,11 @@
         <div class="book-text">{{ book.name }}</div>
         <div class="book-buttons">
           <!-- Oblíbená kniha -->
-          <button (click)="saveBook(book)" class="favorite-btn" title="Přidat do oblíbených">
-            <i class="bi bi-plus-circle-fill"></i>
-          </button>
+          <p-button (click)="saveBook(book)" class="favorite-btn" title="Přidat do oblíbených" severity="success">
+            <ng-template pTemplate="icon">
+              <i class="bi bi-plus-circle-fill"></i>
+            </ng-template> 
+          </p-button>
           <!-- Označit jako přečtenou -->
           <button class="read-btn" title="Označit jako přečtenou">
             <i class="bi bi-book"></i>

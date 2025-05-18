@@ -3,10 +3,15 @@ import { isPlatformBrowser } from '@angular/common';
 import { PublicService } from '../shared/public.service';
 import { AuthService } from '../shared/auth.service';
 import { get } from 'http';
+import { ToastModule } from 'primeng/toast';
+import { Button } from 'primeng/button';
+import { MessageService } from 'primeng/api';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-homepage',
-  imports: [],
+  imports: [CommonModule, ToastModule, Button],
+  providers: [MessageService],
   templateUrl: './homepage.component.html',
   styleUrl: './homepage.component.css'
 })
@@ -16,7 +21,8 @@ export class HomepageComponent {
     constructor(
         @Inject(PLATFORM_ID) private platformId: Object,
         private publicService: PublicService,
-        private authService: AuthService
+        private authService: AuthService,
+        private messageService: MessageService
     ) {}
 
     ngOnInit() {
@@ -26,12 +32,6 @@ export class HomepageComponent {
     }
 
     saveBook(book: any) {
-      console.log('Odesílám na backend:', {
-        bookId: book.id,
-        name: book.name,
-        author: book.author,
-        isbn: book.isbn
-      });
       this.authService.saveBook({
         bookId: book.id,
         name: book.name,
@@ -40,9 +40,11 @@ export class HomepageComponent {
       }).subscribe({
         next: (res) => {
           console.log('Kniha uložena:', res);
+          this.messageService.add({ severity: 'success', summary: 'Úspěch', detail: 'Kniha byla přidána.' });
         },
         error: (err) => {
           console.error('Chyba při ukládání knihy:', err);
+          this.messageService.add({ severity: 'error', summary: 'Chyba', detail: 'Knihu se nepodařilo přidat do seznamu.' });
         }
       });
     }
