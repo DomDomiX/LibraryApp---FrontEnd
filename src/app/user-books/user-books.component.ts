@@ -43,5 +43,18 @@ export class UserBooksComponent implements OnInit {
         console.error('Chyba při načítání knih:', err);
       }
     });
+    console.log(this.books);
+  }
+
+  removeBook(bookid: number) {
+    this.authService.removeUserBook(bookid).subscribe({
+      next: () => {
+        this.books = this.books.filter((book) => book.bookid !== bookid); // Odstranění knihy z lokálního pole
+        console.log('Kniha odstraněna:', bookid);
+      },
+      error: (err) => {
+        console.error('Chyba při odstraňování knihy:', err);
+      }   
+    });
   }
 }

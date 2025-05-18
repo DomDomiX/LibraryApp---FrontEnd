@@ -69,6 +69,19 @@ export class AuthService {
     return this.http.get(`${this.baseUrl}/userBooks`, { headers });
   }
 
+  removeUserBook(bookId: number): Observable<any> {
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+      throw new Error('No token found');
+    }
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
+
+    return this.http.delete(`${this.baseUrl}/bookRemove/${bookId}`, { headers });
+  }
+
   verifyToken(token: string): Observable<{ valid: boolean }> {
     return this.http.post<{ valid: boolean }>(`${this.baseUrl}/verifyToken`, {}, {
       headers: {
