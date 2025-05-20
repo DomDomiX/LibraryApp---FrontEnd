@@ -9,11 +9,16 @@ import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { AuthService } from '../shared/auth.service'; 
 import { ChangeDetectorRef } from '@angular/core';
+import { ToastModule } from 'primeng/toast';
+import { Button } from 'primeng/button';
+import { MessageService } from 'primeng/api';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [MatButtonModule, MatDividerModule, MatIconModule, MatFormFieldModule, MatInputModule, MatSelectModule, ReactiveFormsModule],
+  imports: [CommonModule, ToastModule, Button, MatButtonModule, MatDividerModule, MatIconModule, MatFormFieldModule, MatInputModule, MatSelectModule, ReactiveFormsModule],
+  providers: [MessageService],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
@@ -37,7 +42,7 @@ export class LoginComponent {
     event.stopPropagation();
   }
 
-  constructor(public router: Router, private route: ActivatedRoute, public authService: AuthService, private cdr: ChangeDetectorRef) { }
+  constructor(public router: Router, private route: ActivatedRoute, public authService: AuthService, private cdr: ChangeDetectorRef, private messageService: MessageService) { }
 
   zmenitForm() {
     this.isRegistering = !this.isRegistering;
@@ -57,11 +62,12 @@ export class LoginComponent {
         localStorage.setItem("token", res.accessToken);
         this.router.navigate(['/userBooks']).then(() => {
           window.location.reload(); // Znovu načte stránku po přesměrování
+          this.messageService.add({ severity: 'success', summary: 'Úspěch', detail: 'Úspěšné přihlášení' });
         });
       },
       error: (err) => {
         console.error("Chyba při přihlášení:", err);
-        alert("Přihlášení selhalo.");
+        this.messageService.add({ severity: 'error', summary: 'Chyba', detail: 'Špatné údaje' });
       }
     });
   }
@@ -75,12 +81,12 @@ export class LoginComponent {
     }).subscribe({
       next: (res) => {
         console.log("Registrace úspěšná:", res);
-        alert("Registrace proběhla úspěšně, můžeš se přihlásit.");
+        this.messageService.add({ severity: 'success', summary: 'Úspěch', detail: 'Registrace proběhla úspěšně, můžeš se přihlásit' });
         this.zmenitForm(); // přepne zpět na login form
       },
       error: (err) => {
         console.error("Chyba při registraci:", err);
-        alert("Registrace selhala.");
+        this.messageService.add({ severity: 'error', summary: 'Chyba', detail: 'Registrace selhala' });
       }
     });
   }

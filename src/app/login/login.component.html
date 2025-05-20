@@ -1,4 +1,4 @@
-
+<p-toast></p-toast>
     <div class="container">
         <div class="form-box">
           <h2>{{ isRegistering ? 'Registrace' : 'Přihlášení' }}</h2>
@@ -13,8 +13,8 @@
               <mat-label>Zadejte heslo</mat-label>
               <input matInput [type]="hide() ? 'password' : 'text'" [formControl]="passwordLogin" />
             </mat-form-field>
-    
-            <button mat-flat-button (click)="login()">Přihlásit</button>
+
+            <p-button (click)="login()" class="favorite-btn" title="Přidat do oblíbených" severity="info">Přihlásit se</p-button>
           </div>
           <p>Nemáte účet? <a (click)="zmenitForm()">Registrovat</a></p>
           } @else {
@@ -41,7 +41,7 @@
               <input matInput [type]="hide() ? 'password' : 'text'" [formControl]="passwordRegister"/>
             </mat-form-field>
     
-            <button mat-flat-button (click)="register()">Registrovat</button>
+            <p-button (click)="register()" class="favorite-btn" title="Přidat do oblíbených" severity="info">Registrovat</p-button>
           </div>
           <p id="toggleText">Už máte účet? <a (click)="zmenitForm()">Přihlásit</a></p>
           }
