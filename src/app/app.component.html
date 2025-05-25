@@ -2,6 +2,8 @@
     <div class="navbar">
         <i><div class="logo">DomčaBooks</div></i>
 
+        <div class="user"><i class="bi bi-person-circle" style="font-size: 2rem;"></i></div>
+
         <div class="user">
             @if (loggedIn) {
             <p>{{ userName }}</p>
@@ -9,7 +11,7 @@
                 <p></p>
             }
         </div>
-        
+
 
         <div class="navbar-items">
             @if (loggedIn) {
