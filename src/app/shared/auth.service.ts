@@ -82,6 +82,20 @@ export class AuthService {
     return this.http.delete(`${this.baseUrl}/bookRemove/${bookId}`, { headers });
   }
 
+  sendRating(data: { bookId: string; bookRating: number; bookLike: boolean}) {
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+      throw new Error('No token found');
+    }
+
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
+
+    return this.http.post(`${this.baseUrl}/sendRating`, data, { headers });
+  }
+
   verifyToken(token: string): Observable<{ valid: boolean }> {
     return this.http.post<{ valid: boolean }>(`${this.baseUrl}/verifyToken`, {}, {
       headers: {

@@ -44,7 +44,7 @@ export class HomepageComponent {
         },
         error: (err) => {
           console.error('Chyba při ukládání knihy:', err);
-          this.messageService.add({ severity: 'error', summary: 'Chyba', detail: 'Knihu se nepodařilo přidat do seznamu.' });
+          this.messageService.add({ severity: 'error', summary: 'Chyba', detail: 'Knihu už máte přidanou.' });
         }
       });
     }

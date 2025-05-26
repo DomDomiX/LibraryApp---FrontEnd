@@ -14,10 +14,12 @@
                         <button class="favorite-btn" title="Přidat do oblíbených">
                             <i class="bi bi-star"></i>
                         </button>
-                        <!-- Označit jako přečtenou -->
-                        <button class="read-btn" title="Označit jako přečtenou">
+                        <!-- Pridat recenzi -->
+                        <p-button (click)="sendRating(book)" class="favorite-btn" title="Poslat hodnocení" severity="success">
+                            <ng-template pTemplate="icon">
                             <i class="bi bi-book"></i>
-                        </button>
+                            </ng-template> 
+                        </p-button>
                         <!-- Smazat knihu -->
                         <p-button (onClick)="removeBook(book.bookid)" class="delete-btn" title="Smazat knihu" severity="danger">
                             <ng-template pTemplate="icon">
@@ -25,6 +27,18 @@
                             </ng-template>
                         </p-button>
                     </div>
+                    @if (activeRatingBookId === book.id) {
+                    <form (ngSubmit)="sendRating(book)">
+                        <label>Hodnocení (1-5):</label>
+                        <input type="number" min="1" max="5" [formControl]="bookRating" required>
+                        <label>
+                        <input type="checkbox" [formControl]="bookLike">
+                        Líbila se mi kniha
+                        </label>
+                        <button type="submit" class="btn btn-primary" [disabled]="bookRating.invalid">Odeslat recenzi</button>
+                        <button type="button" class="btn btn-secondary" (click)="activeRatingBookId = null">Zavřít</button>
+                    </form>
+                    }
                 </div>
             }
         </div>
