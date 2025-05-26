@@ -7,12 +7,16 @@ import { ToastModule } from 'primeng/toast';
 import { Button } from 'primeng/button';
 import { MessageService } from 'primeng/api';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormControl } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import {MatSelectModule} from '@angular/material/select';
 
 
 @Component({
   selector: 'app-user-books',
   standalone: true,
-  imports: [CommonModule, ToastModule, Button, ReactiveFormsModule],
+  imports: [CommonModule, ToastModule, Button, ReactiveFormsModule, MatSelectModule,MatFormFieldModule, MatInputModule, MatCheckboxModule],
   providers: [MessageService],
   templateUrl: './user-books.component.html',
   styleUrl: './user-books.component.css'
@@ -22,6 +26,7 @@ export class UserBooksComponent implements OnInit {
 
   bookRating = new FormControl<number | null>(null, [Validators.required, Validators.min(1), Validators.max(5)]);
   bookLike = new FormControl<boolean>(false);
+  showRatingForm: boolean = false;
 
   activeRatingBookId: number | null = null;
 
@@ -31,10 +36,6 @@ export class UserBooksComponent implements OnInit {
     @Inject(PLATFORM_ID) private platformId: Object,
     private messageService: MessageService
   ) {}
-
-  showSuccess() {
-        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Message Content' });
-    }
 
   ngOnInit() {
     if (isPlatformBrowser(this.platformId)) {
@@ -76,15 +77,12 @@ export class UserBooksComponent implements OnInit {
     });
   }
 
-  toggleRatingForm(bookId: number) {
-    this.activeRatingBookId = this.activeRatingBookId === bookId ? null : bookId;
-  }
-
-  sendRating(book: any) {
+  // TODO: Opravit spatne odesilani recenze 
+  sendRating(book: any, event?: Event) {
     if (isPlatformBrowser(this.platformId)) {
       this.authService.sendRating({
-        bookId: book.id,
-        bookRating: this.bookRating.value ?? 0,
+        bookId: book.bookid,
+        bookRating: Number(this.bookRating.value) ?? 0,
         bookLike: this.bookLike.value ? true : false
       }).subscribe({
         next: (res) => {
@@ -92,11 +90,14 @@ export class UserBooksComponent implements OnInit {
         },
         error: (err) => {
           this.messageService.add({ severity: 'error', summary: 'Chyba', detail: 'Recenzi se nepodařilo odeslat.' });
+          this.showRatingForm = false;
+        },
+        complete: () => {
+          this.showRatingForm = false;
+          this.bookRating.reset(5);
+          this.bookLike.reset(false);
         }
       });
-      this.activeRatingBookId = null;
-      this.bookRating.reset(5);
-      this.bookLike.reset(false);
     }
   }
 }

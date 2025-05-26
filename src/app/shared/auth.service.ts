@@ -82,7 +82,7 @@ export class AuthService {
     return this.http.delete(`${this.baseUrl}/bookRemove/${bookId}`, { headers });
   }
 
-  sendRating(data: { bookId: string; bookRating: number; bookLike: boolean}) {
+  sendRating(data: { bookId: number; bookRating: number; bookLike: boolean}) {
     const token = localStorage.getItem('token');
 
     if (!token) {
