@@ -11,12 +11,16 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import {MatSelectModule} from '@angular/material/select';
+import { RatingModule } from 'primeng/rating';
+import { CheckboxModule } from 'primeng/checkbox'
+import { FormsModule } from '@angular/forms';
+
 
 
 @Component({
   selector: 'app-user-books',
   standalone: true,
-  imports: [CommonModule, ToastModule, Button, ReactiveFormsModule, MatSelectModule,MatFormFieldModule, MatInputModule, MatCheckboxModule],
+  imports: [FormsModule ,RatingModule, CheckboxModule,CommonModule, ToastModule, Button, ReactiveFormsModule, MatSelectModule,MatFormFieldModule, MatInputModule, MatCheckboxModule],
   providers: [MessageService],
   templateUrl: './user-books.component.html',
   styleUrl: './user-books.component.css'

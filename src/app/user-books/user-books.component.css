@@ -27,7 +27,6 @@ body {
     gap: 30px;         
 }
 
-
 .obsah h1 {
     color: #fafafa;
     font-size: 40px;
@@ -53,7 +52,6 @@ body {
     border: 1px solid #fafafa;
     box-shadow: 0 0 5px #fafafa;
 }
-
 
 .book-text {
     display: flex;
@@ -117,10 +115,9 @@ body {
     z-index: 1000;
 }
 
-/* Box s formulářem */
 .form-container {
-    background: #ffffff;
-    color: #fafafa;
+    background: #ffffff;  /* Bílé pozadí */
+    color: #333333;       /* Černý text */
     padding: 32px 36px;
     border-radius: 16px;
     box-shadow: 0 0 24px #000000cc;
@@ -133,8 +130,15 @@ body {
 }
 
 .form-container label {
+    color: #333333 !important;  /* Černý text pro labely */
     font-weight: 500;
-    margin-bottom: 6px;
+    margin-bottom: 8px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
 }
 
 .form-container input[type="number"],
@@ -142,9 +146,9 @@ body {
     width: 100%;
     padding: 8px 10px;
     border-radius: 6px;
-    border: 1px solid #444;
-    background: #333;
-    color: #fafafa;
+    border: 1px solid #ddd;  /* Světlý border */
+    background: #fff;        /* Bílé pozadí */
+    color: #333;            /* Černý text */
     margin-bottom: 12px;
     font-size: 16px;
 }
@@ -182,4 +186,107 @@ body {
 .cancel-btn {
     background: #b71c1c;
     color: #fff;
+}
+
+/* Styl pro PrimeNG Rating - větší hvězdy */
+.form-container .p-rating {
+    display: flex;
+    gap: 8px;                           /* Větší mezera mezi hvězdami */
+    margin-bottom: 15px;
+}
+
+.form-container .p-rating .p-rating-item .p-rating-icon {
+    color: #999 !important;
+    font-size: 2rem !important;        /* ZVĚTŠENO z 1.5rem na 2rem */
+    transition: color 0.2s;
+}
+
+.form-container .p-rating .p-rating-item .p-rating-icon.p-rating-icon-active {
+    color: #ffd700 !important;  /* Zlaté aktivní hvězdy */
+}
+
+.form-container .p-rating .p-rating-item:hover .p-rating-icon {
+    color: #ffc107 !important;  /* Hover efekt */
+}
+
+/* Styl pro PrimeNG Checkbox - větší checkbox */
+.form-container .p-checkbox {
+    display: inline-flex;
+    align-items: center;
+    margin-right: 0;
+}
+
+.form-container .p-checkbox .p-checkbox-box {
+    background-color: #f5f5f5 !important;
+    border: 2px solid #ccc !important;
+    border-radius: 8px !important;      /* Kulatější rohy */
+    width: 24px !important;             /* ZVĚTŠENO z 20px na 24px */
+    height: 24px !important;            /* ZVĚTŠENO z 20px na 24px */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.form-container .p-checkbox .p-checkbox-box:hover {
+    border-color: #388e3c !important;  /* Zelený border při hover */
+    background-color: #f0f9f0 !important;
+}
+
+.form-container .p-checkbox .p-checkbox-box.p-highlight {
+    background-color: #388e3c !important;
+    border-color: #388e3c !important;
+    transform: scale(1.05);             /* Mírné zvětšení při zaškrtnutí */
+}
+
+.form-container .p-checkbox .p-checkbox-box .p-checkbox-icon {
+    color: #fff !important;
+    font-size: 16px !important;        /* ZVĚTŠENO z 14px na 16px */
+    font-weight: bold;
+}
+
+/* Lepší layout pro checkbox s labelem */
+.form-group.checkbox-group {
+    flex-direction: row !important;    /* Checkbox a label vedle sebe */
+    align-items: center;
+    gap: 15px;                         /* ZVĚTŠENO z 12px na 15px */
+    margin-bottom: 20px;
+}
+
+.form-group.checkbox-group label {
+    margin-bottom: 0 !important;       /* Odstraníme margin-bottom */
+    font-size: 17px !important;        /* ZVĚTŠENO z 16px na 17px */
+    line-height: 1.4;
+    cursor: pointer;
+    user-select: none;                 /* Text nejde označit */
+}
+
+.form-group.checkbox-group label:hover {
+    color: #388e3c !important;         /* Zelená barva při hover */
+}
+
+/* Obecný styl pro PrimeNG komponenty */
+.form-container .p-component {
+    color: #333333 !important;  /* Černý text */
+}
+
+.form-container .p-inputtext {
+    background-color: #fff !important;     /* Bílé pozadí */
+    color: #333 !important;               /* Černý text */
+    border: 1px solid #ddd !important;    /* Světlý border */
+    border-radius: 6px;
+    padding: 8px 10px;
+}
+
+.form-container .p-inputtext:focus {
+    border-color: #388e3c !important;
+    box-shadow: 0 0 0 2px rgba(56, 142, 60, 0.2) !important;
+}
+
+/* Styl pro checkbox label - starý styl pro kompatibilitu */
+.form-container .p-checkbox + label {
+    margin-left: 8px;
+    color: #333333 !important;  /* Černý text pro checkbox label */
+    cursor: pointer;
 }
