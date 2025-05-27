@@ -27,7 +27,6 @@ export class UserBooksComponent implements OnInit {
   bookRating = new FormControl<number | null>(null, [Validators.required, Validators.min(1), Validators.max(5)]);
   bookLike = new FormControl<boolean>(false);
   showRatingForm: boolean = false;
-
   activeRatingBookId: number | null = null;
 
   constructor(
@@ -77,8 +76,17 @@ export class UserBooksComponent implements OnInit {
     });
   }
 
-  // TODO: Opravit spatne odesilani recenze 
+  openRatingForm(book: any) {
+    this.activeRatingBookId = book.bookid;
+    this.showRatingForm = true;
+    this.bookRating.reset(5);
+    this.bookLike.reset(false);
+  }
+
   sendRating(book: any, event?: Event) {
+    if (event) {
+      event.preventDefault();
+    }
     if (isPlatformBrowser(this.platformId)) {
       this.authService.sendRating({
         bookId: book.bookid,
@@ -90,10 +98,10 @@ export class UserBooksComponent implements OnInit {
         },
         error: (err) => {
           this.messageService.add({ severity: 'error', summary: 'Chyba', detail: 'Recenzi se nepodařilo odeslat.' });
-          this.showRatingForm = false;
         },
         complete: () => {
           this.showRatingForm = false;
+          this.activeRatingBookId = null;
           this.bookRating.reset(5);
           this.bookLike.reset(false);
         }
