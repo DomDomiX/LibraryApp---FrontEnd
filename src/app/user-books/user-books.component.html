@@ -1,4 +1,5 @@
 <p-toast></p-toast>
+<p-confirmdialog></p-confirmdialog>
     <div class="obsah">
         <h1>Your Books</h1>
         <div class="book-items">
@@ -11,17 +12,19 @@
                     <div class="book-text">{{ book.name }}</div>
                     <div class="book-buttons">
                         <!-- Oblíbená kniha -->
-                        <button class="favorite-btn" title="Přidat do oblíbených">
+                        <p-button (click)="openRatingForm(book)" [rounded]="true" class="favorite-btn" title="Poslat hodnocení" severity="warn">
+                            <ng-template pTemplate="icon">
                             <i class="bi bi-star"></i>
-                        </button>
+                            </ng-template> 
+                        </p-button>
                         <!-- Pridat recenzi -->
-                        <p-button (click)="openRatingForm(book)" class="favorite-btn" title="Poslat hodnocení" severity="success">
+                        <p-button  class="favorite-btn" [rounded]="true" title="Poslat hodnocení" severity="success">
                             <ng-template pTemplate="icon">
                             <i class="bi bi-book"></i>
                             </ng-template> 
                         </p-button>
                         <!-- Smazat knihu -->
-                        <p-button (onClick)="removeBook(book.bookid)" class="delete-btn" title="Smazat knihu" severity="danger">
+                        <p-button (click)="removeBook(book.bookid, $event)" [rounded]="true" class="delete-btn" title="Smazat knihu" severity="danger">
                             <ng-template pTemplate="icon">
                                 <i class="bi bi-trash"></i>
                             </ng-template>

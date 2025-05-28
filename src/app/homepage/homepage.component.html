@@ -11,19 +11,23 @@
         <div class="book-text">{{ book.name }}</div>
         <div class="book-buttons">
           <!-- Oblíbená kniha -->
-          <p-button (click)="saveBook(book)" class="favorite-btn" title="Přidat do oblíbených" severity="success">
+          <p-button (click)="saveBook(book)" [rounded]="true" class="favorite-btn" title="Přidat do oblíbených" severity="success">
             <ng-template pTemplate="icon">
               <i class="bi bi-plus-circle-fill"></i>
             </ng-template> 
           </p-button>
           <!-- Statistiky knihy -->
-          <button class="read-btn" title="Označit jako přečtenou">
-            <i class="bi bi-book"></i>
-          </button>
+          <p-button [rounded]="true" class="favorite-btn" title="Přidat do oblíbených" severity="info" >
+            <ng-template pTemplate="icon">
+              <i class="bi bi-book"></i>
+            </ng-template> 
+          </p-button>
           <!-- Detail knihy -->
-          <button class="detail-btn" title="Zobrazit detail">
-            <i class="bi bi-search"></i>
-          </button>
+          <p-button [rounded]="true" class="favorite-btn" title="Přidat do oblíbených" severity="help">
+            <ng-template pTemplate="icon">
+              <i class="bi bi-search"></i>
+            </ng-template> 
+          </p-button>
         </div>
       </div>
     }

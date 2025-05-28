@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
 import { ToastModule } from 'primeng/toast';
 import { Button } from 'primeng/button';
-import { MessageService } from 'primeng/api';
+import { MessageService, ConfirmationService } from 'primeng/api';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormControl } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -14,14 +14,14 @@ import {MatSelectModule} from '@angular/material/select';
 import { RatingModule } from 'primeng/rating';
 import { CheckboxModule } from 'primeng/checkbox'
 import { FormsModule } from '@angular/forms';
-
+import { ConfirmDialog } from 'primeng/confirmdialog';
 
 
 @Component({
   selector: 'app-user-books',
   standalone: true,
-  imports: [FormsModule ,RatingModule, CheckboxModule,CommonModule, ToastModule, Button, ReactiveFormsModule, MatSelectModule,MatFormFieldModule, MatInputModule, MatCheckboxModule],
-  providers: [MessageService],
+  imports: [ConfirmDialog, FormsModule ,RatingModule, CheckboxModule,CommonModule, ToastModule, Button, ReactiveFormsModule, MatSelectModule,MatFormFieldModule, MatInputModule, MatCheckboxModule],
+  providers: [ConfirmationService ,MessageService],
   templateUrl: './user-books.component.html',
   styleUrl: './user-books.component.css'
 })
@@ -37,7 +37,8 @@ export class UserBooksComponent implements OnInit {
     private authService: AuthService,
     private router: Router,
     @Inject(PLATFORM_ID) private platformId: Object,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private confirmationService: ConfirmationService
   ) {}
 
   ngOnInit() {
@@ -66,19 +67,52 @@ export class UserBooksComponent implements OnInit {
     console.log(this.books);
   }
 
-  removeBook(bookid: number) {
-    this.authService.removeUserBook(bookid).subscribe({
-      next: () => {
-        this.books = this.books.filter((book) => book.bookid !== bookid); // Odstranění knihy z lokálního pole
-        console.log('Kniha odstraněna:', bookid);
-        this.messageService.add({ severity: 'success', summary: 'Úspěch', detail: 'Kniha byla odstraněna.' });
-      },
-      error: (err) => {
-        console.error('Chyba při odstraňování knihy:', err);
-        this.messageService.add({ severity: 'error', summary: 'Chyba', detail: 'Knihu se nepodařilo odstranit.' });
-      }   
+  removeBook(bookid: number, event: Event) {
+    this.confirmationService.confirm({
+        target: event.target as EventTarget,
+        message: 'Opravdu chcete smazat tuto knihu?',
+        header: 'Potvrzení smazání',
+        icon: 'pi pi-exclamation-triangle',
+        rejectLabel: 'Zrušit',
+        acceptLabel: 'Smazat',
+        rejectButtonProps: {
+            label: 'Zrušit',
+            severity: 'secondary',
+            outlined: true,
+        },
+        acceptButtonProps: {
+            label: 'Smazat',
+            severity: 'danger',
+        },
+        accept: () => {
+            // Odstranění duplicitní zprávy
+            this.authService.removeUserBook(bookid).subscribe({
+                next: () => {
+                    this.books = this.books.filter((book) => book.bookid !== bookid);
+                    console.log('Kniha odstraněna:', bookid);
+                    this.messageService.add({ 
+                        severity: 'info', 
+                        summary: 'Úspěch', 
+                        detail: 'Kniha byla úspěšně odstraněna.' 
+                    });
+                },
+                error: (err) => {
+                    console.error('Chyba při odstraňování knihy:', err);
+                    this.messageService.add({ 
+                        severity: 'error', 
+                        summary: 'Chyba', 
+                        detail: 'Knihu se nepodařilo odstranit.' 
+                    });
+                }   
+            });
+        },
+        reject: () => {
+            console.log('Smazání bylo zrušeno');
+            // Explicitně zavřít dialog
+            this.confirmationService.close();
+        },
     });
-  }
+}
 
   openRatingForm(book: any) {
     this.activeRatingBookId = book.bookid;
