@@ -25,7 +25,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-top: 20px;
+    padding: 20px 0;
 }
 
 .logo {
@@ -37,19 +37,27 @@ body {
     letter-spacing: 2px;
 }
 
+.user {
+    margin-bottom: 40px;
+    text-align: center;
+    font-size: 16px;
+    color: #bbb; 
+}
+
+.user p {
+    font-size: 25px;
+}
+
 .navbar-items {
     display: flex;
     flex-direction: column;
     gap: 20px;
     width: 100%;
     align-items: center;
-}
-
-.navbar-items {
+    flex: 1; /* Toto zajistí, že navbar-items zaberou zbytek místa */
+    justify-content: flex-start; /* Tlačítka budou na začátku */
     list-style: none;
     padding: 10px;
-    margin-top: 70px; 
-    height: 30px;
 }
 
 .navbar-item {
@@ -79,29 +87,14 @@ body {
     display: block;
     width: 100%;
     height: 100%;
-}
-
-.user {
-    margin-bottom: 40px;
-    text-align: center;
-    font-size: 16px;
-    color: #bbb; 
-}
-
-.user p {
-    font-size: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px; 
 }
 
 .logout-item {
-    margin-top: 380px; 
-}
-
-.navbar-item a {
-    text-decoration: none;
-    align-items: center;
-    gap: 10px; 
-    width: 100%;
-    height: 100%;
+    margin-top: auto; /* Toto posune logout tlačítko na spodek */
 }
 
 .navbar-item i {
