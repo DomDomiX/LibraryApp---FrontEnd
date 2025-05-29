@@ -128,6 +128,58 @@
   font-size: 1.1rem;
 }
 
+/* Overlay a form styly */
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  border-radius: 16px;
+}
+
+.form-container {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  min-width: 280px;
+  max-width: 90%;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.checkbox-group {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.checkbox-group label {
+  margin-bottom: 0 !important;
+}
+
+.form-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+  margin-top: 1.5rem;
+}
+
 /* Rating Dialog */
 .rating-dialog {
   width: 90vw;
@@ -169,7 +221,7 @@
   margin-top: 1rem;
 }
 
-/* PrimeNG Rating customization */
+/* PrimeNG Rating customization - barvy navbaru */
 ::ng-deep .p-rating .p-rating-item .p-rating-icon {
   font-size: 2rem !important;
   color: #dee2e6 !important;
@@ -177,12 +229,60 @@
 }
 
 ::ng-deep .p-rating .p-rating-item .p-rating-icon.p-rating-icon-active {
-  color: #ffc107 !important;
+  color: #667eea !important;
 }
 
 ::ng-deep .p-rating .p-rating-item:hover .p-rating-icon {
-  color: #ffd700 !important;
+  color: #764ba2 !important;
   transform: scale(1.1);
+}
+
+/* PrimeNG Checkbox customization - barvy navbaru */
+::ng-deep .p-checkbox .p-checkbox-box {
+  border-color: #667eea !important;
+}
+
+::ng-deep .p-checkbox .p-checkbox-box.p-highlight {
+  background-color: #667eea !important;
+  border-color: #667eea !important;
+}
+
+::ng-deep .p-checkbox .p-checkbox-box.p-highlight .p-checkbox-icon {
+  color: #ffffff !important;
+}
+
+::ng-deep .p-checkbox .p-checkbox-box:hover {
+  border-color: #764ba2 !important;
+}
+
+::ng-deep .p-checkbox .p-checkbox-box.p-highlight:hover {
+  background-color: #764ba2 !important;
+  border-color: #764ba2 !important;
+}
+
+::ng-deep .p-checkbox .p-checkbox-box.p-focus {
+  box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.2) !important;
+  border-color: #667eea !important;
+}
+
+/* Input field styly */
+::ng-deep .p-inputtext:focus {
+  border-color: #667eea !important;
+  box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.2) !important;
+}
+
+::ng-deep .p-inputtextarea:focus {
+  border-color: #667eea !important;
+  box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.2) !important;
+}
+
+::ng-deep .p-button:focus {
+  box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.2) !important;
+}
+
+/* Zvětšení ikon na tlačítkách */
+::ng-deep .book-actions .p-button .p-button-icon {
+  font-size: 1.3rem !important;
 }
 
 /* PrimeNG Card customization */
@@ -232,4 +332,97 @@
   .dialog-footer {
     flex-direction: column;
   }
+}
+
+/* Custom Rating */
+.custom-rating {
+  display: flex;
+  gap: 0.25rem;
+  margin: 0.5rem 0;
+}
+
+.custom-rating i {
+  font-size: 2rem;
+  color: #dee2e6;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.custom-rating i:hover {
+  transform: scale(1.1);
+}
+
+.custom-rating i.star-active {
+  color: #667eea;
+}
+
+.custom-rating i.star-hover {
+  color: #764ba2;
+}
+
+/* Custom Rating */
+.custom-rating {
+  display: flex;
+  gap: 0.25rem;
+  margin: 0.5rem 0;
+}
+
+.custom-rating i {
+  font-size: 2rem;
+  color: #dee2e6;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.custom-rating i:hover {
+  transform: scale(1.1);
+}
+
+.custom-rating i.star-active {
+  color: #667eea;
+}
+
+.custom-rating i.star-hover {
+  color: #764ba2;
+}
+
+/* Custom Checkbox */
+.custom-checkbox-group {
+  margin-bottom: 1.5rem;
+}
+
+.custom-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 8px;
+  transition: background-color 0.2s ease;
+}
+
+.custom-checkbox:hover {
+  background-color: #f8f9fa;
+}
+
+.custom-checkbox i {
+  font-size: 1.5rem;
+  color: #dee2e6;
+  transition: all 0.2s ease;
+}
+
+.custom-checkbox i.heart-active {
+  color: #667eea;
+}
+
+.custom-checkbox:hover i {
+  color: #764ba2;
+}
+
+.custom-checkbox label {
+  margin: 0;
+  cursor: pointer;
+  user-select: none;
+  color: #2c3e50;
+  font-weight: 500;
 }

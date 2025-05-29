@@ -58,40 +58,54 @@
           </ng-template>
 
           <!-- Rating Form Overlay -->
-          @if (showRatingForm && activeRatingBookId === book.bookid) {
-            <div class="overlay">
-              <div class="form-container">
-                <div class="form-group">
-                  <label>Hodnocení</label>
-                  <p-rating 
-                    [(ngModel)]="bookRating.value" 
-                    [stars]="5">
-                  </p-rating>
-                </div>
-                <div class="form-group checkbox-group">
-                  <p-checkbox 
-                    [binary]="true"
-                    [(ngModel)]="bookLike.value"
-                    [inputId]="'like-' + book.bookid">
-                  </p-checkbox>
-                  <label [for]="'like-' + book.bookid">Chci přidat knihu do oblíbených</label>
-                </div>
-                <div class="form-buttons">
-                  <p-button 
-                    label="Odeslat recenzi"
-                    severity="success"
-                    (onClick)="sendRating(book)">
-                  </p-button>
-                  <p-button 
-                    label="Zavřít"
-                    severity="secondary"
-                    [outlined]="true"
-                    (onClick)="showRatingForm = false; activeRatingBookId = null;">
-                  </p-button>
+        @if (showRatingForm && activeRatingBookId === book.bookid) {
+          <div class="overlay">
+            <div class="form-container">
+              <div class="form-group">
+                <label>Hodnocení</label>
+                <div class="custom-rating">
+                  @for (star of [1,2,3,4,5]; track star) {
+                    <i 
+                      class="bi" 
+                      [class.bi-star-fill]="star <= (bookRating.value || 0)"
+                      [class.bi-star]="star > (bookRating.value || 0)"
+                      [class.star-active]="star <= (bookRating.value || 0)"
+                      (click)="setRating(star)"
+                      (mouseenter)="hoverRating = star"
+                      (mouseleave)="hoverRating = 0"
+                      [class.star-hover]="star <= hoverRating && hoverRating > 0">
+                    </i>
+                  }
                 </div>
               </div>
+              <div class="form-group custom-checkbox-group">
+                <div class="custom-checkbox" (click)="toggleLike()">
+                  <i 
+                    class="bi" 
+                    [class.bi-heart-fill]="bookLike.value || false"
+                    [class.bi-heart]="!(bookLike.value || false)"
+                    [class.heart-active]="bookLike.value || false">
+                  </i>
+                  <label>Chci přidat knihu do oblíbených</label>
+                </div>
+              </div>
+
+              <div class="form-buttons">
+                <p-button 
+                  label="Odeslat recenzi"
+                  severity="success"
+                  (onClick)="sendRating(book)">
+                </p-button>
+                <p-button 
+                  label="Zavřít"
+                  severity="secondary"
+                  [outlined]="true"
+                  (onClick)="closeRatingForm()">
+                </p-button>
+              </div>
             </div>
-          }
+          </div>
+        }
         </p-card>
       }
     </div>

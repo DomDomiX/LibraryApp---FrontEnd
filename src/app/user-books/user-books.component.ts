@@ -34,6 +34,7 @@ export class UserBooksComponent implements OnInit {
   bookLike = new FormControl<boolean>(false);
   showRatingForm: boolean = false;
   activeRatingBookId: number | null = null;
+  hoverRating: number = 0;
 
   constructor(
     private authService: AuthService,
@@ -123,6 +124,14 @@ export class UserBooksComponent implements OnInit {
     this.bookLike.reset(false);
   }
 
+  setRating(rating: number) {
+    this.bookRating.setValue(rating); // Změněno z .value = rating
+  }
+
+  toggleLike() {
+    this.bookLike.setValue(!this.bookLike.value); // Použití setValue()
+  }
+
   sendRating(book: any, event?: Event) {
     if (event) {
       event.preventDefault();
@@ -158,9 +167,11 @@ export class UserBooksComponent implements OnInit {
   }
 
   closeRatingForm() {
-    this.showRatingForm = false;
-    this.activeRatingBookId = null;
-    this.bookRating.reset();
-    this.bookLike.reset(false);
-  }
+  this.showRatingForm = false;
+  this.activeRatingBookId = null;
+  this.hoverRating = 0;
+  // Reset formuláře
+  this.bookRating.setValue(0);
+  this.bookLike.setValue(false);
+}
 }
