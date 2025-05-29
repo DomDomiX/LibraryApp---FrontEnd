@@ -1,35 +1,69 @@
 <p-toast></p-toast>
-<div class="obsah">
-  <h1>Book list</h1>
-  <div class="book-items">
-    @if (books.length === 0) {
-      <p>Žádné knihy nenalezeny.</p>
-    }
+<p-confirmdialog></p-confirmdialog>
 
-    @for (book of books; track book.id) {
-      <div class="book-item">
-        <div class="book-text">{{ book.name }}</div>
-        <div class="book-buttons">
-          <!-- Oblíbená kniha -->
-          <p-button (click)="saveBook(book)" [rounded]="true" class="favorite-btn" title="Přidat do oblíbených" severity="success">
-            <ng-template pTemplate="icon">
-              <i class="bi bi-plus-circle-fill"></i>
-            </ng-template> 
-          </p-button>
-          <!-- Statistiky knihy -->
-          <p-button [rounded]="true" class="favorite-btn" title="Přidat do oblíbených" severity="info" >
-            <ng-template pTemplate="icon">
-              <i class="bi bi-book"></i>
-            </ng-template> 
-          </p-button>
-          <!-- Detail knihy -->
-          <p-button [rounded]="true" class="favorite-btn" title="Přidat do oblíbených" severity="help">
-            <ng-template pTemplate="icon">
-              <i class="bi bi-search"></i>
-            </ng-template> 
-          </p-button>
-        </div>
-      </div>
-    }
+<div class="page-container">
+  <div class="header">
+    <h1><i class="pi pi-book"></i> Knihovna</h1>
+    <p-divider></p-divider>
   </div>
+
+  @if (books.length > 0) {
+    <div class="books-grid">
+      @for (book of books; track book.id) {
+        <p-card 
+          class="book-card"
+          [header]="book.name">
+          
+          <ng-template pTemplate="header">
+            <div class="book-cover">
+              <i class="pi pi-book book-icon"></i>
+            </div>
+          </ng-template>
+
+          <div class="book-content">
+            <h3>{{ book.name }}</h3>
+          </div>
+
+          <ng-template pTemplate="footer">
+            <div class="book-actions">
+              <p-button 
+                icon="pi pi-plus" 
+                severity="success"
+                [outlined]="true"
+                [rounded]="true"
+                size="small"
+                (onClick)="saveBook(book)"
+                [title]="'Přidat do seznamu'">
+              </p-button>
+              
+              <p-button 
+                icon="pi pi-chart-bar" 
+                severity="info"
+                [outlined]="true"
+                [rounded]="true"
+                size="small"
+                [title]="'Statistiky knihy'">
+              </p-button>
+              
+              <p-button 
+                icon="pi pi-search" 
+                severity="help"
+                [outlined]="true"
+                [rounded]="true"
+                size="small"
+                [title]="'Detail knihy'">
+              </p-button>
+            </div>
+          </ng-template>
+        </p-card>
+      }
+    </div>
+  } @else {
+    <!-- Empty state -->
+    <div class="empty-state">
+      <i class="pi pi-book empty-icon"></i>
+      <h2>Žádné knihy</h2>
+      <p>V knihovně nejsou momentálně žádné knihy k dispozici.</p>
+    </div>
+  }
 </div>

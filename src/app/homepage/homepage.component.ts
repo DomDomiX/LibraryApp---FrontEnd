@@ -2,16 +2,18 @@ import { Component, OnInit, PLATFORM_ID, Inject } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { PublicService } from '../shared/public.service';
 import { AuthService } from '../shared/auth.service';
-import { get } from 'http';
 import { ToastModule } from 'primeng/toast';
 import { Button } from 'primeng/button';
-import { MessageService } from 'primeng/api';
+import { MessageService, ConfirmationService } from 'primeng/api';
 import { CommonModule } from '@angular/common';
+import { Card } from 'primeng/card';
+import { Divider } from 'primeng/divider';
+import { ConfirmDialog } from 'primeng/confirmdialog'; 
 
 @Component({
   selector: 'app-homepage',
-  imports: [CommonModule, ToastModule, Button],
-  providers: [MessageService],
+  imports: [ConfirmDialog,Divider,Card,CommonModule, ToastModule, Button],
+  providers: [ConfirmationService, MessageService],
   templateUrl: './homepage.component.html',
   styleUrl: './homepage.component.css'
 })
@@ -22,7 +24,8 @@ export class HomepageComponent {
         @Inject(PLATFORM_ID) private platformId: Object,
         private publicService: PublicService,
         private authService: AuthService,
-        private messageService: MessageService
+        private messageService: MessageService,
+        private confirmationService: ConfirmationService
     ) {}
 
     ngOnInit() {
