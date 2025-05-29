@@ -3,7 +3,7 @@
 
 <div class="page-container">
   <div class="header">
-    <h1><i class="pi pi-book"></i> Knihovna</h1>
+    <h1><i class="bi bi-book"></i> Knihovna</h1>
     <p-divider></p-divider>
   </div>
 
@@ -16,41 +16,41 @@
           
           <ng-template pTemplate="header">
             <div class="book-cover">
-              <i class="pi pi-book book-icon"></i>
+              <i class="bi bi-book book-icon"></i>
             </div>
           </ng-template>
 
           <div class="book-content">
-            <h3>{{ book.name }}</h3>
+            <h3>{{ book.author }}</h3>
           </div>
 
           <ng-template pTemplate="footer">
             <div class="book-actions">
               <p-button 
-                icon="pi pi-plus" 
+                icon="bi bi-plus" 
                 severity="success"
                 [outlined]="true"
                 [rounded]="true"
-                size="small"
+                size="large"
                 (onClick)="saveBook(book)"
                 [title]="'Přidat do seznamu'">
               </p-button>
               
               <p-button 
-                icon="pi pi-chart-bar" 
+                icon="bi bi-info" 
                 severity="info"
                 [outlined]="true"
                 [rounded]="true"
-                size="small"
+                size="large"
                 [title]="'Statistiky knihy'">
               </p-button>
               
               <p-button 
-                icon="pi pi-search" 
+                icon="bi bi-search" 
                 severity="help"
                 [outlined]="true"
                 [rounded]="true"
-                size="small"
+                size="large"
                 [title]="'Detail knihy'">
               </p-button>
             </div>
@@ -61,7 +61,7 @@
   } @else {
     <!-- Empty state -->
     <div class="empty-state">
-      <i class="pi pi-book empty-icon"></i>
+      <i class="bi bi-book empty-icon"></i>
       <h2>Žádné knihy</h2>
       <p>V knihovně nejsou momentálně žádné knihy k dispozici.</p>
     </div>

@@ -3,7 +3,7 @@
 
 <div class="page-container">
   <div class="header">
-    <h1><i class="pi pi-list"></i> Vaše knihy</h1>
+    <h1><i class="bi bi-list"></i> Vaše knihy</h1>
     <p-divider></p-divider>
   </div>
 
@@ -16,41 +16,41 @@
           
           <ng-template pTemplate="header">
             <div class="book-cover">
-              <i class="pi pi-book book-icon"></i>
+              <i class="bi bi-book book-icon"></i>
             </div>
           </ng-template>
 
           <div class="book-content">
-            <h3>{{ book.name }}</h3>
+            <h3>{{ book.author }}</h3>
           </div>
 
           <ng-template pTemplate="footer">
             <div class="book-actions">
               <p-button 
-                icon="pi pi-star" 
+                icon="bi bi-star" 
                 severity="warn"
                 [outlined]="true"
                 [rounded]="true"
-                size="small"
+                size="large"
                 (onClick)="openRatingForm(book)"
                 [title]="'Ohodnotit knihu'">
               </p-button>
               
               <p-button 
-                icon="pi pi-heart" 
+                icon="bi bi-info" 
                 severity="success"
                 [outlined]="true"
                 [rounded]="true"
-                size="small"
+                size="large"
                 [title]="'Přidat do oblíbených'">
               </p-button>
               
               <p-button 
-                icon="pi pi-trash" 
+                icon="bi bi-trash" 
                 severity="danger"
                 [outlined]="true"
                 [rounded]="true"
-                size="small"
+                size="large"
                 (onClick)="removeBook(book.bookid, $event)"
                 [title]="'Smazat knihu'">
               </p-button>
@@ -98,12 +98,12 @@
   } @else {
     <!-- Empty state -->
     <div class="empty-state">
-      <i class="pi pi-book empty-icon"></i>
+      <i class="bi bi-book empty-icon"></i>
       <h2>Žádné knihy</h2>
       <p>Zatím nemáte žádné knihy ve svém seznamu.</p>
       <p-button 
         label="Přidat knihu" 
-        icon="pi pi-plus"
+        icon="bi bi-plus"
         routerLink="/homepage">
       </p-button>
     </div>
