@@ -162,13 +162,6 @@ body {
     }
 }
 
-/* Content area styling */
-router-outlet {
-    margin-left: 280px;
-    width: calc(100% - 280px);
-    min-height: 100vh;
-}
-
 @media (max-width: 768px) {
     router-outlet {
         margin-left: 0;

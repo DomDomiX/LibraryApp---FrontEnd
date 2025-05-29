@@ -15,12 +15,14 @@ import { RatingModule } from 'primeng/rating';
 import { CheckboxModule } from 'primeng/checkbox'
 import { FormsModule } from '@angular/forms';
 import { ConfirmDialog } from 'primeng/confirmdialog';
+import { Card } from 'primeng/card'; 
+import { Divider } from 'primeng/divider'; 
 
 
 @Component({
   selector: 'app-user-books',
   standalone: true,
-  imports: [ConfirmDialog, FormsModule ,RatingModule, CheckboxModule,CommonModule, ToastModule, Button, ReactiveFormsModule, MatSelectModule,MatFormFieldModule, MatInputModule, MatCheckboxModule],
+  imports: [Divider, Card,ConfirmDialog, FormsModule ,RatingModule, CheckboxModule,CommonModule, ToastModule, Button, ReactiveFormsModule, MatSelectModule,MatFormFieldModule, MatInputModule, MatCheckboxModule],
   providers: [ConfirmationService ,MessageService],
   templateUrl: './user-books.component.html',
   styleUrl: './user-books.component.css'
@@ -132,10 +134,18 @@ export class UserBooksComponent implements OnInit {
         bookLike: this.bookLike.value ? true : false
       }).subscribe({
         next: (res) => {
-          this.messageService.add({ severity: 'success', summary: 'Úspěch', detail: 'Recenze byla odeslána.' });
+          this.messageService.add({ 
+            severity: 'success', 
+            summary: 'Úspěch', 
+            detail: 'Recenze byla odeslána.' 
+          });
         },
         error: (err) => {
-          this.messageService.add({ severity: 'error', summary: 'Chyba', detail: 'Recenzi se nepodařilo odeslat.' });
+          this.messageService.add({ 
+            severity: 'error', 
+            summary: 'Chyba', 
+            detail: 'Recenzi se nepodařilo odeslat.' 
+          });
         },
         complete: () => {
           this.showRatingForm = false;
@@ -145,5 +155,12 @@ export class UserBooksComponent implements OnInit {
         }
       });
     }
+  }
+
+  closeRatingForm() {
+    this.showRatingForm = false;
+    this.activeRatingBookId = null;
+    this.bookRating.reset();
+    this.bookLike.reset(false);
   }
 }
