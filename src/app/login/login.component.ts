@@ -49,6 +49,7 @@ export class LoginComponent {
   }
 
   login() {
+    this.loggingIn = true;
     this.authService.login({
       email: this.mailLogin.value!,
       password: this.passwordLogin.value!
@@ -60,7 +61,7 @@ export class LoginComponent {
         };
         localStorage.setItem("user", JSON.stringify(user));
         localStorage.setItem("token", res.accessToken);
-        this.router.navigate(['/userBooks']).then(() => {
+        this.router.navigate(['/homepage']).then(() => {
           window.location.reload(); // Znovu načte stránku po přesměrování
           this.messageService.add({ severity: 'success', summary: 'Úspěch', detail: 'Úspěšné přihlášení' });
         });
@@ -72,7 +73,12 @@ export class LoginComponent {
     });
   }
 
+  goToHomepage() {
+  this.router.navigate(['/homepage']);
+}
+
   register() {
+    this.loggingIn = true;
     this.authService.register({
       firstName: this.firstNameRegister.value!,
       lastName: this.lastNameRegister.value!,
