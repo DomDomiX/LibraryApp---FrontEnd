@@ -31,6 +31,11 @@ Tento frontend je klientská aplikace pro LibraryApp, která umožňuje uživate
 - **Autentizace a autorizace**  
   Přístup k uživatelskému seznamu knih je chráněn pomocí JWT tokenu.
 
+- **Seznam přátel**
+  Správa přátel - posílání žádostí, správa žádostí
+
+- **Filtrace**
+  Možnost filtrovat knihy jak v osobním seznamu tak i v katalogu
 ---
 
 ## Instalace
