@@ -1,0 +1,269 @@
+<p-toast></p-toast>
+<p-confirmdialog></p-confirmdialog>
+
+<div class="page-container">
+  <div class="header">
+    <h1><i class="bi bi-person-circle"></i> Můj účet</h1>
+    <p-divider></p-divider>
+  </div>
+
+  <div class="account-content">
+    <!-- Profilová část -->
+    <div class="profile-section">
+      <div class="profile-photo">
+        <div class="photo-container">
+          @if (userProfile.profilePhoto) {
+            <img [src]="userProfile.profilePhoto" alt="Profilová fotka" class="profile-image">
+          } @else {
+            <i class="bi bi-person-circle default-avatar"></i>
+          }
+        </div>
+        <div class="photo-actions">
+          <input 
+            type="file" 
+            #fileInput 
+            accept="image/*" 
+            (change)="onFileSelected($event)"
+            style="display: none;">
+          <p-button 
+            icon="bi bi-camera"
+            label="Změnit fotku"
+            severity="info"
+            [outlined]="true"
+            size="small"
+            (onClick)="fileInput.click()">
+          </p-button>
+          @if (userProfile.profilePhoto) {
+            <p-button 
+              icon="bi bi-trash"
+              label="Odstranit"
+              severity="danger"
+              [outlined]="true"
+              size="small"
+              (onClick)="removeProfilePhoto()">
+            </p-button>
+          }
+        </div>
+      </div>
+
+      <div class="profile-info">
+        <h2>{{ userProfile.firstName }} {{ userProfile.lastName }}</h2>
+        <p class="user-email">{{ userProfile.email }}</p>
+        <p class="member-since">Člen od: {{ userProfile.memberSince | date:'dd.MM.yyyy' }}</p>
+      </div>
+    </div>
+
+    <!-- Formulář pro úpravu údajů -->
+    <div class="edit-section">
+      <div class="section-header">
+        <h3><i class="bi bi-pencil-square"></i> Upravit údaje</h3>
+      </div>
+
+      <form [formGroup]="userForm" class="user-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Jméno *</label>
+            <input 
+              type="text"
+              class="form-input"
+              placeholder="Zadejte jméno"
+              formControlName="firstName">
+            @if (userForm.get('firstName')?.invalid && userForm.get('firstName')?.touched) {
+              <small class="error-text">Jméno je povinné</small>
+            }
+          </div>
+
+          <div class="form-group">
+            <label>Příjmení *</label>
+            <input 
+              type="text"
+              class="form-input"
+              placeholder="Zadejte příjmení"
+              formControlName="lastName">
+            @if (userForm.get('lastName')?.invalid && userForm.get('lastName')?.touched) {
+              <small class="error-text">Příjmení je povinné</small>
+            }
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>E-mail *</label>
+          <input 
+            type="email"
+            class="form-input"
+            placeholder="Zadejte e-mail"
+            formControlName="email">
+          @if (userForm.get('email')?.invalid && userForm.get('email')?.touched) {
+            <small class="error-text">Zadejte platný e-mail</small>
+          }
+        </div>
+
+        <div class="form-group">
+          <label>Telefon</label>
+          <input 
+            type="tel"
+            class="form-input"
+            placeholder="Zadejte telefon"
+            formControlName="phone">
+        </div>
+
+        <div class="form-group">
+          <label>Bio</label>
+          <textarea 
+            class="form-textarea"
+            placeholder="Něco o sobě..."
+            formControlName="bio"
+            rows="4">
+          </textarea>
+        </div>
+
+        <div class="form-actions">
+          <p-button 
+            label="Uložit změny"
+            severity="success"
+            icon="bi bi-check-lg"
+            [loading]="saving"
+            [disabled]="userForm.invalid"
+            (onClick)="saveProfile()">
+          </p-button>
+          
+          <p-button 
+            label="Zrušit"
+            severity="secondary"
+            [outlined]="true"
+            icon="bi bi-x-lg"
+            (onClick)="resetForm()">
+          </p-button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Změna hesla -->
+    <div class="password-section">
+      <div class="section-header">
+        <h3><i class="bi bi-shield-lock"></i> Změna hesla</h3>
+      </div>
+
+      <form [formGroup]="passwordForm" class="password-form">
+        <div class="form-group">
+          <label>Současné heslo *</label>
+          <div class="password-input">
+            <input 
+              [type]="hideCurrentPassword ? 'password' : 'text'"
+              class="form-input"
+              placeholder="Zadejte současné heslo"
+              formControlName="currentPassword">
+            <i 
+              class="bi password-toggle"
+              [class.bi-eye]="hideCurrentPassword"
+              [class.bi-eye-slash]="!hideCurrentPassword"
+              (click)="hideCurrentPassword = !hideCurrentPassword">
+            </i>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Nové heslo *</label>
+            <div class="password-input">
+              <input 
+                [type]="hideNewPassword ? 'password' : 'text'"
+                class="form-input"
+                placeholder="Zadejte nové heslo"
+                formControlName="newPassword">
+              <i 
+                class="bi password-toggle"
+                [class.bi-eye]="hideNewPassword"
+                [class.bi-eye-slash]="!hideNewPassword"
+                (click)="hideNewPassword = !hideNewPassword">
+              </i>
+            </div>
+            @if (passwordForm.get('newPassword')?.invalid && passwordForm.get('newPassword')?.touched) {
+              <small class="error-text">Heslo musí mít alespoň 6 znaků</small>
+            }
+          </div>
+
+          <div class="form-group">
+            <label>Potvrzení hesla *</label>
+            <div class="password-input">
+              <input 
+                [type]="hideConfirmPassword ? 'password' : 'text'"
+                class="form-input"
+                placeholder="Potvrďte nové heslo"
+                formControlName="confirmPassword">
+              <i 
+                class="bi password-toggle"
+                [class.bi-eye]="hideConfirmPassword"
+                [class.bi-eye-slash]="!hideConfirmPassword"
+                (click)="hideConfirmPassword = !hideConfirmPassword">
+              </i>
+            </div>
+            @if (passwordForm.get('confirmPassword')?.invalid && passwordForm.get('confirmPassword')?.touched) {
+              <small class="error-text">Hesla se neshodují</small>
+            }
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <p-button 
+            label="Změnit heslo"
+            severity="warn"
+            icon="bi bi-shield-check"
+            [loading]="changingPassword"
+            [disabled]="passwordForm.invalid"
+            (onClick)="changePassword()">
+          </p-button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Statistiky uživatele -->
+    <div class="stats-section">
+      <div class="section-header">
+        <h3><i class="bi bi-bar-chart"></i> Moje statistiky</h3>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon">
+            <i class="bi bi-book"></i>
+          </div>
+          <div class="stat-content">
+            <h4>{{ userStats.totalBooks || 0 }}</h4>
+            <p>Celkem knih</p>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon">
+            <i class="bi bi-star"></i>
+          </div>
+          <div class="stat-content">
+            <h4>{{ userStats.avgRating || 0 }}/5</h4>
+            <p>Průměrné hodnocení</p>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon">
+            <i class="bi bi-heart"></i>
+          </div>
+          <div class="stat-content">
+            <h4>{{ userStats.favoriteBooks || 0 }}</h4>
+            <p>Oblíbené knihy</p>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon">
+            <i class="bi bi-calendar"></i>
+          </div>
+          <div class="stat-content">
+            <h4>{{ userStats.daysActive || 0 }}</h4>
+            <p>Dní aktivní</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

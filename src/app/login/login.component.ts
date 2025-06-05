@@ -68,6 +68,7 @@ export class LoginComponent {
       },
       error: (err) => {
         console.error("Chyba při přihlášení:", err);
+        this.loggingIn = false;
         this.messageService.add({ severity: 'error', summary: 'Chyba', detail: 'Špatné údaje' });
       }
     });
@@ -92,6 +93,7 @@ export class LoginComponent {
       },
       error: (err) => {
         console.error("Chyba při registraci:", err);
+        this.loggingIn = false; 
         this.messageService.add({ severity: 'error', summary: 'Chyba', detail: 'Registrace selhala' });
       }
     });
