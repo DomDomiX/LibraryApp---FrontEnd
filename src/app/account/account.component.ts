@@ -2,12 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { UserService } from '../shared/user.service';
 
 import { ToastModule } from 'primeng/toast';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { Button } from 'primeng/button';
 import { DividerModule } from 'primeng/divider';
 import { MessageService, ConfirmationService } from 'primeng/api';
+import { error } from 'console';
 
 @Component({
   selector: 'app-account',
@@ -35,34 +37,36 @@ export class AccountComponent implements OnInit{
   hideNewPassword = true;
   hideConfirmPassword = true;
 
-  userProfile = {
-    firstName: 'Jan',
-    lastName: 'Novák',
-    email: 'jan.novak@email.cz',
-    phone: '+420 123 456 789',
-    bio: 'Milovník knih a čtení. Rád objevujem nové žánre a autory.',
-    profilePhoto: null as string | null,
-    memberSince: new Date('2023-01-15')
-  };
+userProfile = {
+  firstName: '',           
+  lastName: '',            
+  email: '',              
+  phone: '',
+  bio: '',
+  profilePhoto: null,
+  memberSince: new Date()
+};
 
-  userStats = {
-    totalBooks: 25,
-    avgRating: 4.2,
-    favoriteBooks: 8,
-    daysActive: 156
-  };
+userStats = {
+  totalBooks: 0,           
+  avgRating: 0,
+  favoriteBooks: 0,
+  daysActive: 0
+};
 
   constructor(
     private fb: FormBuilder,
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
-    private router: Router
+    private router: Router,
+    private userService: UserService
   ) {
     this.initializeForms();
   }
 
   ngOnInit() {
     this.loadUserData();
+    this.loadUserStats();
   }
 
   initializeForms() {
@@ -83,6 +87,23 @@ export class AccountComponent implements OnInit{
     });
   }
 
+  loadUserStats() {
+    this.userService.getUserStats().subscribe({
+      next: (res) => {
+        console.log('Načtené statistiky:', res);
+        this.userStats = {
+          totalBooks: res.totalBooks || 0,
+          avgRating: res.avgRating || 0,
+          favoriteBooks: res.favoriteBooks || 0,
+          daysActive: res.daysActive || 0
+        };
+      },
+      error: (error) => {
+        console.error('Chyba při načítání statistik:', error);
+      }
+    }); 
+  }
+
   passwordMatchValidator(group: FormGroup) {
     const newPassword = group.get('newPassword');
     const confirmPassword = group.get('confirmPassword');
@@ -96,22 +117,27 @@ export class AccountComponent implements OnInit{
   }
 
   loadUserData() {
-    // Načtení dat z localStorage nebo API
-    const userData = localStorage.getItem('user');
-    if (userData) {
-      const user = JSON.parse(userData);
-      this.userProfile.firstName = user.firstName || 'Jan';
-      this.userProfile.lastName = user.lastName || 'Novák';
-      this.userProfile.email = user.email || 'jan.novak@email.cz';
-      
-      // Aktualizace formuláře
-      this.userForm.patchValue({
-        firstName: this.userProfile.firstName,
-        lastName: this.userProfile.lastName,
-        email: this.userProfile.email
+   this.userService.getUserProfile().subscribe({
+      next: (res) => {
+        this.userProfile = res;
+        this.userForm.patchValue({
+          firstName: this.userProfile.firstName,
+          lastName: this.userProfile.lastName,
+          email: this.userProfile.email,
+          phone: this.userProfile.phone,
+          bio: this.userProfile.bio
+        });
+      },
+      error: (error) => {
+      console.error('Chyba při načítání dat:', error);
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Chyba',
+        detail: 'Nepodařilo se načíst uživatelská data.'
       });
     }
-  }
+   });
+ }
 
   onFileSelected(event: any) {
     const file = event.target.files[0];
@@ -168,45 +194,62 @@ export class AccountComponent implements OnInit{
   saveProfile() {
     if (this.userForm.valid) {
       this.saving = true;
-      
-      // Simulace API volání
-      setTimeout(() => {
-        const formData = this.userForm.value;
-        this.userProfile = { ...this.userProfile, ...formData };
-        
-        // Uložení do localStorage
-        const userData = {
-          firstName: formData.firstName,
-          lastName: formData.lastName,
-          email: formData.email,
-          name: `${formData.firstName} ${formData.lastName}`
-        };
-        localStorage.setItem('user', JSON.stringify(userData));
-        
+
+      const formData = this.userForm.value;
+
+      this.userService.updateUserProfile(formData).subscribe({
+        next: (res) => {
+          this.userProfile = res;
+          this.saving = false;
+
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Úspěch',
+            detail: 'Profil byl úspěšně aktualizován.'
+          });
+        },
+        error: (error) => {
+        console.error('Chyba při ukládání:', error);
         this.saving = false;
+        
         this.messageService.add({
-          severity: 'success',
-          summary: 'Úspěch',
-          detail: 'Profil byl úspěšně uložen.'
+          severity: 'error',
+          summary: 'Chyba',
+          detail: 'Nepodařilo se uložit profil.'
         });
-      }, 1000);
+      }
+    });
     }
   }
 
   changePassword() {
     if (this.passwordForm.valid) {
       this.changingPassword = true;
-      
-      // Simulace API volání
-      setTimeout(() => {
-        this.changingPassword = false;
-        this.passwordForm.reset();
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Úspěch',
-          detail: 'Heslo bylo úspěšně změněno.'
-        });
-      }, 1500);
+
+      const formData = this.passwordForm.value;
+
+      this.userService.changePassword(formData).subscribe({
+        next: () => {
+          this.changingPassword = false;
+          this.passwordForm.reset();
+
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Úspěch',
+            detail: 'Heslo bylo úspěšně změněno.'
+          });
+        },
+        error: (error) => {
+          console.error('Chyba při změně hesla:', error);
+          this.changingPassword = false;
+
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Chyba',
+            detail: 'Nepodařilo se změnit heslo.'
+          });
+        }
+      });
     }
   }
 
