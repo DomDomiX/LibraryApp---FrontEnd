@@ -177,6 +177,13 @@
 
 .password-input {
   position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-input .form-input {
+  padding-right: 3rem; /* Udělej místo pro očičko */
+  flex: 1;
 }
 
 .password-toggle {
@@ -189,8 +196,26 @@
   transition: color 0.2s ease;
 }
 
+.password-toggle {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #6c757d;
+  cursor: pointer;
+  transition: color 0.2s ease;
+  font-size: 1.1rem;
+  z-index: 2;
+  padding: 0.25rem;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .password-toggle:hover {
   color: #667eea;
+  background-color: rgba(102, 126, 234, 0.1);
 }
 
 .error-text {
